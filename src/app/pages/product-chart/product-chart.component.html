@@ -1,0 +1,11 @@
+<div class="container">
+  <div class="header mt-3 mb-3">
+    <h2 class="text-center">Product Details Overview</h2>
+  </div>
+  <button class="btn btn-primary mb-3 mt-3" (click)="clicktoProductList()">
+    Go to Product List
+  </button>
+  <div>
+    <p-chart type="bar" [data]="chartData" [options]="chartOptions"></p-chart>
+  </div>
+</div>

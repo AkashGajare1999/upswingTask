@@ -1,0 +1,433 @@
+<div class="container">
+  <div class="header mt-3 mb-3">
+    <h1 class="text-center">Product</h1>
+  </div>
+  <div class="text-right mb-4 d-flex no-wrap justify-content-between">
+    <div>
+      <a class="btn btn-primary" (click)="backToDashboard()"
+        >Back To Dashboard</a
+      >
+
+      <a class="btn btn-primary ms-2" (click)="addProductshowModal()"
+        >Add Product</a
+      >
+    </div>
+    <div>
+      <input
+        type="search"
+        class="form-control"
+        placeholder="Search"
+        [(ngModel)]="search"
+        (input)="getAllfilterData()"
+      />
+    </div>
+  </div>
+  <div class="card">
+    <p-table
+      [value]="Products"
+      [tableStyle]="{ 'min-width': '50rem' }"
+      [paginator]="true"
+      [rows]="rows"
+      [totalRecords]="totalRecords"
+      [loading]="loading"
+      (onPage)="paginate($event)"
+    >
+      <ng-template pTemplate="header">
+        <tr>
+          <th>No.</th>
+          <th>Brand Name</th>
+          <th>Product Name</th>
+          <th>Category</th>
+          <th>Quantity</th>
+          <th>Actual Price</th>
+          <th>Total Price</th>
+          <th>Action</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-Products let-i="rowIndex">
+        <tr>
+          <td>{{ i + 1 }}</td>
+          <td>{{ Products.brandname }}</td>
+          <td>{{ Products.productname }}</td>
+          <td>{{ Products.category.value }}</td>
+          <td>{{ Products.quantity }}</td>
+          <td>{{ Products.actualprice }}</td>
+          <td>{{ Products.totalprice }}</td>
+          <td>
+            <a class="btn btn-info me-2" (click)="getProductData(Products.id)"
+              ><i class="fa fa-eye" style="color: #fff" aria-hidden="true"></i
+            ></a>
+            <a class="btn btn-primary me-2" (click)="editProduct(Products)"
+              ><i class="far fa-edit"></i
+            ></a>
+            <a class="btn btn-danger" (click)="DeleteProduct(Products.id)"
+              ><i class="fa fa-trash" aria-hidden="true"></i
+            ></a>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
+
+<!-- add product modal -->
+
+<p-dialog
+  header="Add Product"
+  [(visible)]="AddProductvisible"
+  [modal]="true"
+  [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
+  [style]="{ width: '50vw' }"
+  [draggable]="false"
+  [resizable]="false"
+>
+  <form [formGroup]="addUserFormData">
+    <div class="form-group">
+      <label for="brandname">Brand Name</label>
+      <input
+        type="text"
+        class="form-control"
+        id="brandname"
+        formControlName="brandname"
+      />
+    </div>
+
+    <div
+      *ngIf="
+        addUserFormDataControls['brandname'].errors &&
+        addUserFormDataControls['brandname'].touched
+      "
+    >
+      <span
+        class="text-danger"
+        *ngIf="addUserFormDataControls['brandname'].errors['required']"
+        >Brand Name is required</span
+      >
+    </div>
+    <div class="form-group">
+      <label for="productname">Product Name</label>
+      <input
+        type="text"
+        class="form-control"
+        id="productname"
+        formControlName="productname"
+      />
+    </div>
+    <div
+      *ngIf="
+        addUserFormDataControls['productname'].errors &&
+        addUserFormDataControls['productname'].touched
+      "
+    >
+      <span
+        class="text-danger"
+        *ngIf="addUserFormDataControls['productname'].errors['required']"
+        >Product Name is required</span
+      >
+    </div>
+    <div class="form-group">
+      <label for="category">Category</label>
+      <div class="card flex justify-content-center">
+        <p-dropdown
+          [options]="categories"
+          formControlName="category"
+          optionLabel="value"
+          placeholder="Select a Category"
+        />
+      </div>
+    </div>
+    <div
+      *ngIf="
+        addUserFormDataControls['category'].errors &&
+        addUserFormDataControls['category'].touched
+      "
+    >
+      <span
+        class="text-danger"
+        *ngIf="addUserFormDataControls['category'].errors['required']"
+        >Category is required</span
+      >
+    </div>
+    <div>
+      <label for="quantity">Quantity</label>
+      <input
+        type="number"
+        class="form-control"
+        id="quantity"
+        formControlName="quantity"
+        (keyup)="checkpriceAndQuantity()"
+      />
+    </div>
+    <div
+      *ngIf="
+        addUserFormDataControls['quantity'].errors &&
+        addUserFormDataControls['quantity'].touched
+      "
+    >
+      <span
+        class="text-danger"
+        *ngIf="addUserFormDataControls['quantity'].errors['required']"
+        >Quantity is required</span
+      >
+    </div>
+    <div>
+      <label for="actualprice">Actual Price</label>
+      <input
+        type="number"
+        class="form-control"
+        id="actualprice"
+        formControlName="actualprice"
+        (keyup)="checkpriceAndQuantity()"
+      />
+    </div>
+    <div
+      *ngIf="
+        addUserFormDataControls['actualprice'].errors &&
+        addUserFormDataControls['actualprice'].touched
+      "
+    >
+      <span
+        class="text-danger"
+        *ngIf="addUserFormDataControls['actualprice'].errors['required']"
+        >Actual Price is required</span
+      >
+    </div>
+    <div>
+      <label for="totalprice">Total Price</label>
+      <input
+        type="number"
+        class="form-control"
+        id="totalprice"
+        formControlName="totalprice"
+        readonly
+      />
+    </div>
+  </form>
+  <div class="footer addFooterModal text-right">
+    <button class="btn btn-primary ms-2" (click)="addProduct()">
+      Add Product
+    </button>
+    <button class="btn btn-secondary" (click)="DissmissaddProductModal()">
+      Cancel
+    </button>
+  </div>
+</p-dialog>
+
+<!-- end add product modal -->
+
+<!-- Update product modal -->
+<p-dialog
+  header="Update Product"
+  [(visible)]="UpdateProductvisible"
+  [modal]="true"
+  [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
+  [style]="{ width: '50vw' }"
+  [draggable]="false"
+  [resizable]="false"
+>
+  <form [formGroup]="UpdateUserFormData" (ngSubmit)="UpdateProduct()">
+    <div class="form-group">
+      <label for="brandname">Brand Name</label>
+      <input
+        type="text"
+        class="form-control"
+        id="brandname"
+        formControlName="brandname"
+      />
+    </div>
+    <div
+      *ngIf="
+        UpdateUserFormDataControls['brandname'].errors &&
+        UpdateUserFormDataControls['brandname'].touched
+      "
+    >
+      <span
+        class="text-danger"
+        *ngIf="UpdateUserFormDataControls['brandname'].errors['required']"
+        >Brand Name is required</span
+      >
+    </div>
+    <div class="form-group">
+      <label for="productname">Product Name</label>
+      <input
+        type="text"
+        class="form-control"
+        id="productname"
+        formControlName="productname"
+      />
+    </div>
+    <div
+      *ngIf="
+        UpdateUserFormDataControls['productname'].errors &&
+        UpdateUserFormDataControls['productname'].touched
+      "
+    >
+      <span
+        class="text-danger"
+        *ngIf="UpdateUserFormDataControls['productname'].errors['required']"
+        >Product Name is required</span
+      >
+    </div>
+    <div class="form-group">
+      <label for="category">Category</label>
+      <div class="card flex justify-content-center">
+        <p-dropdown
+          [options]="categories"
+          formControlName="category"
+          optionLabel="value"
+          placeholder="Select a Category"
+        />
+      </div>
+    </div>
+    <div
+      *ngIf="
+        UpdateUserFormDataControls['category'].errors &&
+        UpdateUserFormDataControls['category'].touched
+      "
+    >
+      <span
+        class="text-danger"
+        *ngIf="UpdateUserFormDataControls['category'].errors['required']"
+        >Category is required</span
+      >
+    </div>
+    <div>
+      <label for="quantity">Quantity</label>
+      <input
+        type="number"
+        class="form-control"
+        id="quantity"
+        formControlName="quantity"
+        (keyup)="UpdatecheckpriceAndQuantity()"
+      />
+    </div>
+    <div
+      *ngIf="
+        UpdateUserFormDataControls['quantity'].errors &&
+        UpdateUserFormDataControls['quantity'].touched
+      "
+    >
+      <span
+        class="text-danger"
+        *ngIf="UpdateUserFormDataControls['quantity'].errors['required']"
+        >Quantity is required</span
+      >
+    </div>
+    <div>
+      <label for="actualprice">Actual Price</label>
+      <input
+        type="number"
+        class="form-control"
+        id="actualprice"
+        formControlName="actualprice"
+        (keyup)="UpdatecheckpriceAndQuantity()"
+      />
+    </div>
+    <div
+      *ngIf="
+        UpdateUserFormDataControls['actualprice'].errors &&
+        UpdateUserFormDataControls['actualprice'].touched
+      "
+    >
+      <span
+        class="text-danger"
+        *ngIf="UpdateUserFormDataControls['actualprice'].errors['required']"
+        >Actual Price is required</span
+      >
+    </div>
+    <div>
+      <label for="totalprice">Total Price</label>
+      <input
+        type="number"
+        class="form-control"
+        id="totalprice"
+        formControlName="totalprice"
+        readonly
+      />
+    </div>
+  </form>
+  <div class="footer addFooterModal text-right">
+    <button class="btn btn-primary ms-2" (click)="UpdateProduct()">
+      Update Product
+    </button>
+    <button class="btn btn-secondary" (click)="DissmissUpdateProductModal()">
+      Cancel
+    </button>
+  </div>
+</p-dialog>
+
+<!-- end update product modal -->
+
+<!-- View product -->
+<p-dialog
+  header="View Product"
+  [(visible)]="showProductvisible"
+  [modal]="true"
+  [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
+  [style]="{ width: '50vw' }"
+  [draggable]="false"
+  [resizable]="false"
+>
+  <form [formGroup]="addUserFormData">
+    <div class="form-group">
+      <label for="brandname">Brand Name</label>
+      <input
+        type="text"
+        class="form-control"
+        id="brandname"
+        formControlName="brandname"
+        readonly
+      />
+    </div>
+    <div class="form-group">
+      <label for="productname">Product Name</label>
+      <input
+        type="text"
+        class="form-control"
+        id="productname"
+        formControlName="productname"
+        readonly
+      />
+    </div>
+    <div class="form-group">
+      <label for="category">Category</label>
+      <input
+        type="text"
+        class="form-control"
+        formControlName="category"
+        readonly
+      />
+    </div>
+    <div>
+      <label for="quantity">Quantity</label>
+      <input
+        type="text"
+        class="form-control"
+        id="quantity"
+        formControlName="quantity"
+        readonly
+      />
+    </div>
+    <div>
+      <label for="actualprice">Actual Price</label>
+      <input
+        type="text"
+        class="form-control"
+        id="actualprice"
+        formControlName="actualprice"
+        readonly
+      />
+    </div>
+    <div>
+      <label for="totalprice">Total Price</label>
+      <input
+        type="text"
+        class="form-control"
+        id="totalprice"
+        formControlName="totalprice"
+        readonly
+      />
+    </div>
+  </form>
+</p-dialog>
+<!-- end view product modal -->

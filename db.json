@@ -1,0 +1,125 @@
+{
+  "products": [
+    {
+      "brandname": "Xyz",
+      "productname": "abc",
+      "category": {
+        "value": "fast food"
+      },
+      "quantity": 3,
+      "actualprice": 25,
+      "totalprice": 75,
+      "id": "c851"
+    },
+    {
+      "id": "5379",
+      "brandname": "wer",
+      "productname": "ewq",
+      "category": {
+        "value": "Rome"
+      },
+      "quantity": 1,
+      "actualprice": 23,
+      "totalprice": 23
+    },
+    {
+      "id": "372f",
+      "brandname": "dss",
+      "productname": "dsd",
+      "category": {
+        "value": "London"
+      },
+      "quantity": 2,
+      "actualprice": 3,
+      "totalprice": 2
+    },
+    {
+      "id": "6272",
+      "brandname": "rt",
+      "productname": "tr",
+      "category": {
+        "value": "Rome"
+      },
+      "quantity": 4,
+      "actualprice": 4,
+      "totalprice": 3
+    },
+    {
+      "id": "a5e8",
+      "brandname": "gf",
+      "productname": "gf",
+      "category": {
+        "value": "London"
+      },
+      "quantity": 3,
+      "actualprice": 3,
+      "totalprice": 2
+    },
+    {
+      "id": "0bcc",
+      "brandname": "hg",
+      "productname": "gf",
+      "category": {
+        "value": "Istanbul"
+      },
+      "quantity": 3,
+      "actualprice": 2,
+      "totalprice": 1
+    },
+    {
+      "id": "418b",
+      "brandname": "nestleee",
+      "productname": "ewq",
+      "category": {
+        "value": "London"
+      },
+      "quantity": 6,
+      "actualprice": 5,
+      "totalprice": 4
+    },
+    {
+      "id": "be24",
+      "brandname": "kl",
+      "productname": "l",
+      "category": {
+        "value": "Rome"
+      },
+      "quantity": 7,
+      "actualprice": 6,
+      "totalprice": 5
+    },
+    {
+      "id": "7da0",
+      "brandname": "jk",
+      "productname": "h",
+      "category": {
+        "value": "London"
+      },
+      "quantity": 6,
+      "actualprice": 7,
+      "totalprice": 6
+    },
+    {
+      "id": "9692",
+      "brandname": "ui",
+      "productname": "it",
+      "category": {
+        "value": "Istanbul"
+      },
+      "quantity": 6,
+      "actualprice": 5,
+      "totalprice": 5
+    },
+    {
+      "id": "298a",
+      "brandname": "yu",
+      "productname": "uy",
+      "category": {
+        "value": "Paris"
+      },
+      "quantity": 7,
+      "actualprice": 8,
+      "totalprice": 5
+    }
+  ]
+}

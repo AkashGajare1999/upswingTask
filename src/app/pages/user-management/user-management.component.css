@@ -1,0 +1,9 @@
+input:focus {
+  box-shadow: none;
+  border: 1px solid #ced4da;
+}
+
+.addFooterModal button {
+  float: right;
+  margin-top: 20px;
+}
