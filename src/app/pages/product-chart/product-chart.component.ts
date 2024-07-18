@@ -37,14 +37,24 @@ export class ProductChartComponent implements OnInit {
 
   showchartData() {
     debugger;
+    const categoryMap: { [key: string]: number } = {};
+
+  this.ProductData.forEach(product => {
+    if (categoryMap[product.category.value]) {
+      categoryMap[product.category.value] += product.totalprice;
+    } else {
+      categoryMap[product.category.value] = product.totalprice;
+    }
+  });
+  
     this.chartData = {
-      labels: this.ProductData.map((product) => product.category.value),
+      labels: Object.keys(categoryMap),
       datasets: [
         {
           label: 'Price',
           backgroundColor: '#42A5F5',
           borderColor: '#1E88E5',
-          data: this.ProductData.map((product) => product.totalprice),
+          data: Object.values(categoryMap),
         },
       ],
     };
